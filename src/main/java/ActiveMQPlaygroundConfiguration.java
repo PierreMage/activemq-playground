@@ -29,7 +29,7 @@ import javax.jms.MessageListener;
 @ImportResource("classpath:/properties-config.xml")
 public class ActiveMQPlaygroundConfiguration {
 
-    @Value("${jms.userName")
+    @Value("${jms.userName}")
     private String userName;
 
     @Value("${jms.password}")
@@ -41,7 +41,7 @@ public class ActiveMQPlaygroundConfiguration {
     @Value("${jms.sessionCacheSize}")
     private int sessionCacheSize;
 
-    @Value("${jms.queueName")
+    @Value("${jms.queueName}")
     private String queueName;
 
     @Value("${jms.listenerContainer.concurrency}")
