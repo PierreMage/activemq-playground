@@ -1,6 +1,10 @@
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jms.core.JmsTemplate;
 
 public class QueueSender {
+
+    private static final Logger logger = LoggerFactory.getLogger(QueueSender.class);
 
     private final JmsTemplate jmsTemplate;
 
@@ -12,6 +16,8 @@ public class QueueSender {
     }
 
     public void send(final String message) {
+        logger.debug("start sending \"{}\"", message);
         jmsTemplate.convertAndSend(queueName, message);
+        logger.debug("end sending \"{}\"", message);
     }
 }

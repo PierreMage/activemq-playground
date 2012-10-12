@@ -7,5 +7,6 @@ public class ActiveMQPlayground {
         ApplicationContext context = new AnnotationConfigApplicationContext(ActiveMQPlaygroundConfiguration.class);
         QueueSender queueSender = context.getBean(QueueSender.class);
         queueSender.send("Hello World!");
+        System.exit(0);
     }
 }
