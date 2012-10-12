@@ -62,26 +62,26 @@ public class ActiveMQPlaygroundConfiguration {
         return defaultMessageListenerContainer;
     }
 
-    public JmsTemplate jmsTemplate() {
+    private JmsTemplate jmsTemplate() {
         return new JmsTemplate(connectionFactory());
     }
 
-    public ConnectionFactory connectionFactory() {
+    private ConnectionFactory connectionFactory() {
         final CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(amqConnectionFactory());
         cachingConnectionFactory.setExceptionListener(jmsExceptionListener());
         cachingConnectionFactory.setSessionCacheSize(sessionCacheSize);
         return cachingConnectionFactory;
     }
 
-    public ConnectionFactory amqConnectionFactory() {
+    private ConnectionFactory amqConnectionFactory() {
         return new ActiveMQConnectionFactory(userName, password, brokerUrl);
     }
 
-    public ExceptionListener jmsExceptionListener() {
+    private ExceptionListener jmsExceptionListener() {
         return new JmsExceptionListener();
     }
 
-    public MessageListener queueListener() {
+    private MessageListener queueListener() {
         return new QueueListener();
     }
 
