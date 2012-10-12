@@ -53,29 +53,6 @@ public class ActiveMQPlaygroundConfiguration {
     }
 
     @Bean
-    public JmsTemplate jmsTemplate() {
-        return new JmsTemplate(connectionFactory());
-    }
-
-    @Bean
-    public ConnectionFactory connectionFactory() {
-        final CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(amqConnectionFactory());
-        cachingConnectionFactory.setExceptionListener(jmsExceptionListener());
-        cachingConnectionFactory.setSessionCacheSize(sessionCacheSize);
-        return cachingConnectionFactory;
-    }
-
-    @Bean
-    public ConnectionFactory amqConnectionFactory() {
-        return new ActiveMQConnectionFactory(userName, password, brokerUrl);
-    }
-
-    @Bean
-    public ExceptionListener jmsExceptionListener() {
-        return new JmsExceptionListener();
-    }
-
-    @Bean
     public AbstractMessageListenerContainer listenerContainer() {
         final DefaultMessageListenerContainer defaultMessageListenerContainer = new DefaultMessageListenerContainer();
         defaultMessageListenerContainer.setConnectionFactory(connectionFactory());
@@ -85,7 +62,25 @@ public class ActiveMQPlaygroundConfiguration {
         return defaultMessageListenerContainer;
     }
 
-    @Bean
+    public JmsTemplate jmsTemplate() {
+        return new JmsTemplate(connectionFactory());
+    }
+
+    public ConnectionFactory connectionFactory() {
+        final CachingConnectionFactory cachingConnectionFactory = new CachingConnectionFactory(amqConnectionFactory());
+        cachingConnectionFactory.setExceptionListener(jmsExceptionListener());
+        cachingConnectionFactory.setSessionCacheSize(sessionCacheSize);
+        return cachingConnectionFactory;
+    }
+
+    public ConnectionFactory amqConnectionFactory() {
+        return new ActiveMQConnectionFactory(userName, password, brokerUrl);
+    }
+
+    public ExceptionListener jmsExceptionListener() {
+        return new JmsExceptionListener();
+    }
+
     public MessageListener queueListener() {
         return new QueueListener();
     }
