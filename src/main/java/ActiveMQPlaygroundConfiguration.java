@@ -2,7 +2,8 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jms.connection.CachingConnectionFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.AbstractMessageListenerContainer;
@@ -26,26 +27,13 @@ import javax.jms.MessageListener;
  * </p>
  */
 @Configuration
-@ImportResource("classpath:/properties-config.xml")
+@PropertySource("classpath:jms.properties")
 public class ActiveMQPlaygroundConfiguration {
 
-    @Value("${jms.userName}")
-    private String userName;
-
-    @Value("${jms.password}")
-    private String password;
-
-    @Value("${jms.brokerUrl}")
-    private String brokerUrl;
-
-    @Value("${jms.sessionCacheSize}")
-    private int sessionCacheSize;
-
-    @Value("${jms.queueName}")
-    private String queueName;
-
-    @Value("${jms.listenerContainer.concurrency}")
-    private String listenerContainerConcurrency;
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyPlaceholder() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 
     @Bean
     public QueueSender queueSender() {
@@ -85,4 +73,21 @@ public class ActiveMQPlaygroundConfiguration {
         return new QueueListener();
     }
 
+    @Value("${jms.userName}")
+    private String userName;
+
+    @Value("${jms.password}")
+    private String password;
+
+    @Value("${jms.brokerUrl}")
+    private String brokerUrl;
+
+    @Value("${jms.sessionCacheSize}")
+    private int sessionCacheSize;
+
+    @Value("${jms.queueName}")
+    private String queueName;
+
+    @Value("${jms.listenerContainer.concurrency}")
+    private String listenerContainerConcurrency;
 }
